@@ -1,0 +1,1234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PLA0001" printOrder="Horizontal" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="ea8b8ce3-7a25-4208-9ef0-4fc4ddb07039">
+	<property name="ireport.zoom" value="0.90909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["123"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PK_UTIL.FUN_OBJETIVO_ESTRATEGICO(OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NOEI_CODIGO") AS OBJETIVO_ESTRATEGICO,
+     PK_UTIL.FUN_ACCION_ESTRATEGICA(OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NOEI_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NAEI_CODIGO") AS ACCION_ESTRATEGICA,
+     PK_UTIL.FUN_ACTIVIDAD_OPERATIVA(OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NOEI_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NAEI_CODIGO",OPREFA_POI_ACTIVIDADES_OPERATI."NAOI_CODIGO") AS ACTIVIDAD_OPERATIVA,
+     'AO-'||OPREFA_POI_ACTIVIDADES_OPERATI."NAOI_CODIGO" AS ACTIVIDAD_OPERATIVA_CODIGO,
+     PK_UTIL.FUN_TAREA_OPERATIVA(OPREFA_POI_ACTIVIDADES_OPE_DET.NTAREA_OPERATIVA_CODIGO) AS TAREA_OPERATIVA,
+     'T.'||OPREFA_POI_ACTIVIDADES_OPE_DET.NTAREA_OPERATIVA_CODIGO AS TAREA_OPERATIVA_CODIGO,
+     PK_UTIL.FUN_AREA_LABORAL(CAREA_LABORAL_CODIGO) AS AREA_LABORAL,
+     PK_UTIL.FUN_CATEGORIA_PRESUPUESTAL(CCATEGORIA_PRESUPUESTAL_CODIGO) AS CATEGORIA_PRESUPUESTAL,
+     CCATEGORIA_PRESUPUESTAL_CODIGO AS CATEGORIA_PRESUPUESTAL_CODIGO,
+     PK_UTIL.FUN_PRODUCTO(CPRODUCTO_CODIGO) AS PRODUCTO,
+     CPRODUCTO_CODIGO AS PRODUCTO_CODIGO,
+     PK_UTIL.FUN_ACTIVIDAD(CACTIVIDAD_CODIGO) AS ACTIVIDAD,
+     CACTIVIDAD_CODIGO AS ACTIVIDAD_CODIGO,
+     PK_UTIL.FUN_UNIDAD_MEDIDA(OPREFA_TAREA_OPERATIVA.CUNIDAD_MEDIDA_CODIGO) AS UNIDAD_MEDIDA,
+     PK_UTIL.FUN_UNIDAD_MEDIDA(OPREFA_POI_ACTIVIDADES_OPERATI.CUNIDAD_MEDIDA_CODIGO) AS UNIDAD_MEDIDA_ACTIVIDAD,
+     CMES_CODIGO||':'||PK_UTIL.FUN_MES_ABREVIATURA(CMES_CODIGO) AS MES,
+     PK_UTIL.FUN_USUARIO($P{USUARIO}) AS USUARIO_IMPRESION,
+     OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO" AS PERIODO,
+     OPREFA_POI_ACTIVIDADES_OPERATI."NOEI_CODIGO" AS OBJETIVO_ESTRATEGICO_CODIGO,
+     OPREFA_POI_ACTIVIDADES_OPERATI."NAEI_CODIGO" AS ACCION_ESTRATEGICA_CODIGO,
+     OPREFA_POI_ACTIVIDADES_OPERATI."NAOI_PRIORIDAD" AS PRIORIDAD,
+     OPREFA_POI_ACTIVIDADES_OPERATI."VAOI_DESCRIPCION" AS DESCRIPCION,
+     OPREFA_POI_ACTIVIDADES_OPE_DET."CAOI_DETALLE_ANO" AS ANIO,
+     OPREFA_POI_ACTIVIDADES_OPE_DET."NAOI_DETALLE_CANTIDAD" AS META_FISICA,
+     OPREFA_POI_ACTIVIDADES_OPE_DET."NAOI_DETALLE_IMPORTE" AS MONTO,
+     OPREFA_TAREA_OPERATIVA."NTAREA_OPERATIVA_CODIGO" AS OPREFA_TAREA_OPERATIVA_NTAREA_,
+     OPREFA_TAREA_OPERATIVA."VTAREA_OPERATIVA_DESCRIPCION" AS OPREFA_TAREA_OPERATIVA_VTAREA_,
+     OPREFA_TAREA_OPERATIVA."VTAREA_OPERATIVA_ABREVIATURA" AS OPREFA_TAREA_OPERATIVA_VTAREA_,
+     OPREFA_TAREA_OPERATIVA."CESTADO_CODIGO" AS OPREFA_TAREA_OPERATIVA_CESTADO,
+     OPREFA_TAREA_OPERATIVA."VUSUARIO_CREADOR" AS OPREFA_TAREA_OPERATIVA_VUSUARI,
+     OPREFA_TAREA_OPERATIVA."DUSUARIO_CREADOR" AS OPREFA_TAREA_OPERATIVA_DUSUARI,
+     OPREFA_TAREA_OPERATIVA."VUSUARIO_CODIGO" AS OPREFA_TAREA_OPERATIVA_VUSUARI,
+     OPREFA_TAREA_OPERATIVA."DUSUARIO_FECHA" AS OPREFA_TAREA_OPERATIVA_DUSUARI,
+     OPREFA_TAREA_OPERATIVA."CUNIDAD_MEDIDA_CODIGO" AS OPREFA_TAREA_OPERATIVA_CUNIDAD
+     
+FROM
+     OPREFA_POI_ACTIVIDADES_OPERATI INNER JOIN OPREFA_POI_ACTIVIDADES_OPE_DET 
+     ON  OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO" = OPREFA_POI_ACTIVIDADES_OPE_DET."CPERIODO_CODIGO"
+     AND OPREFA_POI_ACTIVIDADES_OPERATI."NAEI_CODIGO" = OPREFA_POI_ACTIVIDADES_OPE_DET."NAEI_CODIGO"
+     AND OPREFA_POI_ACTIVIDADES_OPERATI."NAOI_CODIGO" = OPREFA_POI_ACTIVIDADES_OPE_DET."NAOI_CODIGO"
+     AND OPREFA_POI_ACTIVIDADES_OPERATI."NOEI_CODIGO" = OPREFA_POI_ACTIVIDADES_OPE_DET."NOEI_CODIGO" 
+     INNER JOIN OPREFA_TAREA_OPERATIVA 
+     ON OPREFA_TAREA_OPERATIVA.NTAREA_OPERATIVA_CODIGO = OPREFA_POI_ACTIVIDADES_OPE_DET.NTAREA_OPERATIVA_CODIGO
+WHERE
+     OPREFA_POI_ACTIVIDADES_OPERATI."CPERIODO_CODIGO" = $P{PERIODO}
+ AND OPREFA_POI_ACTIVIDADES_OPERATI."CESTADO_CODIGO"! = 'AN'
+ORDER BY
+     ANIO ASC,
+     CATEGORIA_PRESUPUESTAL ASC,
+     PRODUCTO ASC,
+     ACTIVIDAD ASC,
+     OBJETIVO_ESTRATEGICO ASC,
+     ACCION_ESTRATEGICA ASC,
+     ACTIVIDAD_OPERATIVA ASC,
+     TAREA_OPERATIVA]]>
+	</queryString>
+	<field name="OBJETIVO_ESTRATEGICO" class="java.lang.String"/>
+	<field name="ACCION_ESTRATEGICA" class="java.lang.String"/>
+	<field name="ACTIVIDAD_OPERATIVA" class="java.lang.String"/>
+	<field name="ACTIVIDAD_OPERATIVA_CODIGO" class="java.lang.String"/>
+	<field name="TAREA_OPERATIVA" class="java.lang.String"/>
+	<field name="TAREA_OPERATIVA_CODIGO" class="java.lang.String"/>
+	<field name="AREA_LABORAL" class="java.lang.String"/>
+	<field name="CATEGORIA_PRESUPUESTAL" class="java.lang.String"/>
+	<field name="CATEGORIA_PRESUPUESTAL_CODIGO" class="java.lang.String"/>
+	<field name="PRODUCTO" class="java.lang.String"/>
+	<field name="PRODUCTO_CODIGO" class="java.lang.String"/>
+	<field name="ACTIVIDAD" class="java.lang.String"/>
+	<field name="ACTIVIDAD_CODIGO" class="java.lang.String"/>
+	<field name="UNIDAD_MEDIDA" class="java.lang.String"/>
+	<field name="UNIDAD_MEDIDA_ACTIVIDAD" class="java.lang.String"/>
+	<field name="MES" class="java.lang.String"/>
+	<field name="USUARIO_IMPRESION" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="OBJETIVO_ESTRATEGICO_CODIGO" class="java.math.BigDecimal"/>
+	<field name="ACCION_ESTRATEGICA_CODIGO" class="java.math.BigDecimal"/>
+	<field name="PRIORIDAD" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="ANIO" class="java.lang.String"/>
+	<field name="META_FISICA" class="java.math.BigDecimal"/>
+	<field name="MONTO" class="java.math.BigDecimal"/>
+	<field name="OPREFA_TAREA_OPERATIVA_NTAREA_" class="java.math.BigDecimal"/>
+	<field name="OPREFA_TAREA_OPERATIVA_VTAREA_" class="java.lang.String"/>
+	<field name="OPREFA_TAREA_OPERATIVA_CESTADO" class="java.lang.String"/>
+	<field name="OPREFA_TAREA_OPERATIVA_VUSUARI" class="java.lang.String"/>
+	<field name="OPREFA_TAREA_OPERATIVA_DUSUARI" class="oracle.sql.TIMESTAMP"/>
+	<field name="OPREFA_TAREA_OPERATIVA_CUNIDAD" class="java.lang.String"/>
+	<group name="ANIO">
+		<groupExpression><![CDATA[$F{ANIO}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="CATEGORIA_PRESUPUESTAL">
+		<groupExpression><![CDATA[$F{CATEGORIA_PRESUPUESTAL}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="PRODUCTO">
+		<groupExpression><![CDATA[$F{PRODUCTO}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="ACTIVIDAD">
+		<groupExpression><![CDATA[$F{ACTIVIDAD}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="OBJETIVO_ESTRATEGICO">
+		<groupExpression><![CDATA[$F{OBJETIVO_ESTRATEGICO}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="ACCION_ESTRATEGICA" isStartNewColumn="true" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{ACCION_ESTRATEGICA}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="346">
+				<textField>
+					<reportElement x="320" y="100" width="725" height="15" uuid="2945f1d3-d793-449c-a702-9d45f5009bd4"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CATEGORIA_PRESUPUESTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="115" width="725" height="15" uuid="e64a96d1-1f07-43cb-953a-d7863ef18370"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{PRODUCTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="130" width="725" height="15" uuid="92818b9c-585c-4478-b150-7749668a9267"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ACTIVIDAD}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="155" width="725" height="15" uuid="e2b00cf9-abaf-4cf0-af08-6ae9b92073b2"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{OBJETIVO_ESTRATEGICO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="170" width="725" height="15" uuid="a403906b-2a54-42a4-abef-64137c3c956a"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ACCION_ESTRATEGICA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="15" width="1150" height="20" uuid="24c83914-4788-45e3-b215-a3b3168c2e63"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PLAN OPERATIVO INSTITUCIONAL "+$F{ANIO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-1" x="0" y="0" width="188" height="7" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="9be27866-9328-4b42-a4bd-f2d933500d1e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="5" isBold="true" pdfFontName="Helvetica"/>
+					</textElement>
+					<text><![CDATA[OPREFA - Oficina Previsional de las Fuerzas Armadas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-2" x="0" y="7" width="90" height="7" isPrintWhenDetailOverflows="true" uuid="0d73a5aa-6fe3-458d-86cf-8f2145073640"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="5"/>
+					</textElement>
+					<text><![CDATA[PLA0001]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" x="950" y="14" width="199" height="8" isPrintWhenDetailOverflows="true" uuid="ae916c32-b489-46f2-908c-5880bec0092a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Usu. Imp. : "+$F{USUARIO_IMPRESION}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="" isBlankWhenNull="false">
+					<reportElement key="textField-1" x="955" y="7" width="195" height="8" isPrintWhenDetailOverflows="true" uuid="d9f3cec7-2634-43c8-a996-985aaf322852"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Fecha Imp. : "+(new java.text.SimpleDateFormat("dd'/'MM'/'yyyy h:mm a",Locale.getDefault())).format(new Date())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="false">
+					<reportElement key="textField-2" x="1141" y="0" width="9" height="7" isPrintWhenDetailOverflows="true" uuid="e2b6bae2-dd64-44ef-8ec8-2d057b583835"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Page" isBlankWhenNull="false">
+					<reportElement key="textField-3" x="1075" y="0" width="65" height="7" isPrintWhenDetailOverflows="true" uuid="de2e9792-0d87-46ce-864d-1e29fe19206f"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página : "+$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="45" width="250" height="15" uuid="333b9de9-ac40-4326-b5c0-a484fff52b50"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SECTOR ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="250" height="15" uuid="cfa581bf-e2a6-4d0e-8d33-7b66f9010406"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PLIEGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="75" width="250" height="15" uuid="bd1a37fa-12b2-4298-af2a-6be116265867"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[UE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="45" width="466" height="15" uuid="d568cca0-da7a-4a31-8363-b94c92253532"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[26 DEFENSA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="60" width="466" height="15" uuid="b981f178-aeac-48c1-84c3-02c175d00166"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[026 MINISTERIO DE DEFENSA ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="75" width="466" height="15" uuid="3a57dd1f-781a-4615-8964-999835ba53a1"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[009. DIRECCION GENERAL PREVISIONAL DE LAS FUERZAS ARMADAS ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="100" width="250" height="15" uuid="d7b9852f-61b6-4bb5-960d-d1c81ebb9054"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CATEGORÍA PRESUPUESTAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="115" width="250" height="15" uuid="81563b0b-f504-428a-92a3-d190117284ac"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRODUCTO -PROYECTO-ACCIONES COMUNES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="130" width="250" height="15" uuid="fba2ab6b-ded6-46e6-943d-6f97867925c2"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACTIVIDAD-ACCIÓN DE INVERSIÓN- OBRA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="155" width="250" height="15" uuid="9ce16a08-a0f6-47f1-bbe5-e410e06036a6"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[OBJETIVO ESTRATÉGICO INSTITUCIONAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="170" width="250" height="15" uuid="5cdb9e70-8fcd-4a12-9e10-11b0f4cdfe0a"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACCIÓN ESTRATÉGICA INSTITUCIONAL]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="250" y="130" width="70" height="15" uuid="dcf1daab-bf13-40f7-a79e-59473546af00"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ACTIVIDAD_CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="250" y="115" width="70" height="15" uuid="38eea254-d869-41d6-a07e-e6db01a3634a"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{PRODUCTO_CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="250" y="100" width="70" height="15" uuid="d1c0d5cb-7b59-4ddf-8b73-b29a147213ab"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CATEGORIA_PRESUPUESTAL_CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="250" y="155" width="70" height="15" uuid="864ea467-f199-4ea5-b4ab-8d48cdc754df"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{OBJETIVO_ESTRATEGICO_CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="250" y="170" width="70" height="15" uuid="5a9720b9-3cf7-410a-a786-872924e231dc"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ACCION_ESTRATEGICA_CODIGO}]]></textFieldExpression>
+				</textField>
+				<crosstab>
+					<reportElement x="0" y="200" width="1150" height="136" uuid="0b713e07-1a59-4495-b286-a2286a109d5f"/>
+					<crosstabDataset>
+						<dataset resetType="Group" resetGroup="ACCION_ESTRATEGICA"/>
+					</crosstabDataset>
+					<crosstabHeaderCell>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="234" height="30" uuid="57ea1155-abbd-4e12-b3d7-5cc6998987e7"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["ACTIVIDAD OPERATIVA"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="234" y="0" width="60" height="30" uuid="8f1e3732-a32b-426f-8a0e-0b81ac432e78"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["UNIDAD MEDIDA"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="294" y="0" width="60" height="30" uuid="c1665574-f487-44da-b1b5-017ad7ad7208"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["META ANUAL POI"]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="ACTIVIDAD_OPERATIVA_CODIGO" width="0" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{ACTIVIDAD_OPERATIVA_CODIGO}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents/>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents backcolor="#BFE1FF" mode="Opaque">
+								<staticText>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="354" height="30" uuid="fbb78f65-9ef7-414c-ae2f-85afa1d889a7"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[TOTAL]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="ACTIVIDAD_OPERATIVA" width="0" totalPosition="Start">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{ACTIVIDAD_OPERATIVA}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents backcolor="#005FB3" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="ACTIVIDAD_OPERATIVA_UNIDAD_MEDIDA" width="0" totalPosition="Start">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{UNIDAD_MEDIDA_ACTIVIDAD}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents/>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="TAREA_OPERATIVA_CODIGO" width="0" totalPosition="Start">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{TAREA_OPERATIVA_CODIGO}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents/>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="30" uuid="943a37f4-cce7-4e9e-a75c-fa35371e07ce"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA_CODIGO}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="35" y="0" width="199" height="30" uuid="531454c4-bc7f-4a03-9e0a-25c60466f389"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="234" y="0" width="60" height="30" uuid="58ab05e2-cead-427d-a2cc-7a7e509fb3c6"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA_UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+								<staticText>
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="294" y="0" width="60" height="15" uuid="b2bd5e3f-329d-4249-92f3-4ef2a1bf3f6e"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Física]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" x="294" y="15" width="60" height="15" uuid="00f0f31c-3a68-4eb2-a0e6-dd4668a669f8"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Presupuesto (S/)]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="TAREA_OPERATIVA" width="234">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{TAREA_OPERATIVA}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Transparent">
+								<box>
+									<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="35" y="0" width="35" height="34" uuid="7a678065-44c9-482c-94a3-9e64029099fa"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{TAREA_OPERATIVA_CODIGO}]]></textFieldExpression>
+								</textField>
+								<textField isStretchWithOverflow="true">
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="70" y="0" width="164" height="34" uuid="2b97de71-38e2-492a-ad75-f0b6c7b07749"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{TAREA_OPERATIVA}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents backcolor="#BFE1FF" mode="Transparent">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField isStretchWithOverflow="true">
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="0" y="0" width="40" height="30" uuid="e0149750-ed11-44aa-ab09-2708137af3a9"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA_CODIGO}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="40" y="0" width="194" height="30" uuid="c198f6a7-ac8c-4fd4-85d3-bb2589a426b4"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="234" y="0" width="60" height="30" uuid="13282e5d-2525-4d3f-a015-7b79506f2967"/>
+									<textElement verticalAlignment="Middle">
+										<font size="9"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{ACTIVIDAD_OPERATIVA_UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+								<staticText>
+									<reportElement style="Crosstab Data Text" x="294" y="0" width="60" height="15" uuid="6f61376f-06b6-4662-8f1a-ed57a50980d2"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9"/>
+									</textElement>
+									<text><![CDATA[Física]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="Crosstab Data Text" x="294" y="15" width="60" height="15" uuid="27c7e43b-43d6-4256-a080-fcb32a3267e4"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="9"/>
+									</textElement>
+									<text><![CDATA[Presupuesto (S/)]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="UNIDAD_MEDIDA" width="120">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{UNIDAD_MEDIDA}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents>
+								<textField isStretchWithOverflow="true">
+									<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="34" uuid="0e67045a-5d02-4af2-8628-19d49a616514"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{UNIDAD_MEDIDA}]]></textFieldExpression>
+								</textField>
+								<staticText>
+									<reportElement style="Crosstab Data Text" x="60" y="0" width="60" height="17" uuid="6eb99807-f7a4-42a9-9e61-42d46dfb7f4f"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Física]]></text>
+								</staticText>
+								<staticText>
+									<reportElement style="Crosstab Data Text" x="60" y="17" width="60" height="17" uuid="f3dcc279-7d17-4872-9b19-498e15e2af03"/>
+									<box>
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement verticalAlignment="Middle">
+										<font size="8"/>
+									</textElement>
+									<text><![CDATA[Presupuesto (S/)]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="MES" height="30" totalPosition="End">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{MES}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#BFE1FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="30" uuid="1374cef4-7fc0-4db0-bfd3-0128c8a3ae44"/>
+									<textElement verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{MES}.substring(new java.lang.Integer(3))]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents backcolor="#BFE1FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="65" height="30" uuid="0634feba-976f-4e3c-9a7c-56c680b85d76"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[Total]]></text>
+								</staticText>
+							</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="META_FISICAMeasure" class="java.math.BigDecimal" calculation="Sum">
+						<measureExpression><![CDATA[$F{META_FISICA}]]></measureExpression>
+					</measure>
+					<measure name="MONTOMeasure" class="java.lang.Integer" calculation="Sum">
+						<measureExpression><![CDATA[$F{MONTO}]]></measureExpression>
+					</measure>
+					<crosstabCell width="60" height="34">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="17" uuid="72e83d57-b3cf-421d-8f92-950df67a7407"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToTallestObject" x="0" y="17" width="60" height="17" uuid="a0e8c569-380f-4620-835e-17f35d15b9e6"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="60" height="0" rowTotalGroup="ACTIVIDAD_OPERATIVA">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="71" height="34" columnTotalGroup="MES">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="71" height="17" uuid="84ddfd93-b0d0-4dda-ae72-3c329e5b8a33"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="17" width="71" height="17" uuid="cbe5a01a-3fd9-4a34-b581-58b0d5a28ac2"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="71" height="0" rowTotalGroup="ACTIVIDAD_OPERATIVA" columnTotalGroup="MES">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="60" height="30" rowTotalGroup="TAREA_OPERATIVA">
+						<cellContents backcolor="#BFE1FF" mode="Transparent">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="15" uuid="80bb158b-195e-4e04-af5c-cc22ab2e5c46"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="60" height="15" uuid="fa895d66-dbdf-4784-af6c-c8dad5b23432"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="65" height="30" rowTotalGroup="TAREA_OPERATIVA" columnTotalGroup="MES">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="15" uuid="ca01b0d0-3cb8-4be4-abc9-178cd18ec82d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="65" height="15" uuid="7a0cd288-a08d-4fd5-b0e6-26ab20909a3d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="60" height="0" rowTotalGroup="UNIDAD_MEDIDA">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell width="65" height="0" rowTotalGroup="UNIDAD_MEDIDA" columnTotalGroup="MES">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell height="30" rowTotalGroup="ACTIVIDAD_OPERATIVA_CODIGO">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="15" uuid="12c38232-6121-4cdc-a732-8f3faeed767b"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="60" height="15" uuid="92ef5ad7-ec90-4f30-b261-ad7bae55c11a"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="71" height="30" rowTotalGroup="ACTIVIDAD_OPERATIVA_CODIGO" columnTotalGroup="MES">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="71" height="15" uuid="e16413bd-45fa-43db-980f-3c651aa504db"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="71" height="15" uuid="7f7573f7-26c8-402e-bcdf-72d0bee8660b"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="30" rowTotalGroup="TAREA_OPERATIVA_CODIGO">
+						<cellContents>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="60" height="15" uuid="088070ab-35cb-4fb4-afb5-e1ea0adb7ff7"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="60" height="15" uuid="56076398-4d81-4581-a319-bdb34af2ca1d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="71" height="30" rowTotalGroup="TAREA_OPERATIVA_CODIGO" columnTotalGroup="MES">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="71" height="15" uuid="7e4e958c-616b-45c8-b8d2-a07be4dbd98d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{META_FISICAMeasure}]]></textFieldExpression>
+							</textField>
+							<textField pattern="#,##0;-#,##0">
+								<reportElement style="Crosstab Data Text" x="0" y="15" width="71" height="15" uuid="89d1311f-890f-4875-8adf-1f3c666c1e8c"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{MONTOMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="0" rowTotalGroup="ACTIVIDAD_OPERATIVA_UNIDAD_MEDIDA">
+						<cellContents/>
+					</crosstabCell>
+					<crosstabCell width="71" height="0" rowTotalGroup="ACTIVIDAD_OPERATIVA_UNIDAD_MEDIDA" columnTotalGroup="MES">
+						<cellContents/>
+					</crosstabCell>
+				</crosstab>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

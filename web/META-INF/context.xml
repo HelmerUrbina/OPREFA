@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/OPREFA">
+    <Resource auth="Container" 
+              driverClassName="oracle.jdbc.OracleDriver" 
+              maxActive="20" 
+              maxIdle="10" 
+              maxWait="-1" 
+              name="OPREFA" 
+              password="OPREFA" 
+              type="javax.sql.DataSource" 
+              url="jdbc:oracle:thin:@SERVER2012:1521:ORCL" 
+              username="OPREFA"/>
+</Context>
