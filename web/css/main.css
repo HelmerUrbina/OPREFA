@@ -35,13 +35,11 @@ body {
     width: 23%;
     background: #000000;
 }
-
 #maindata {
     float: left;
     width: 77%;   /* IE6 */
     height: 100%; 
 }
-
 #maininf {
     width: 860px;
     clear: both;

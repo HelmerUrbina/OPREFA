@@ -25,14 +25,14 @@ body{
     width: 100%;
     height: auto;
     background-color: #efefef;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
     font-size: 14px;
-    color:black;    
+    color:black;
 }
-.header{    
+.header{
     display: block; 
     color:black;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
     font-size: 20px;
     font-weight: bold;
     text-align: center; 
@@ -60,6 +60,7 @@ body{
 }
 label{
     display: block;
+    font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
     margin-bottom: 8px;
     font-weight: bold;
 }
@@ -79,17 +80,18 @@ td label{
     text-align: right;
 }
 .footer{
+    font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
     display: block;
     margin-top: 6px;
     margin-right: 7px;
     font-size: 12px;
     text-align: right;
-    color: #888888;
+    color: black;
 }
-.link{   
+.link{
     text-decoration: none;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 11px;
     text-align: left;
     color: #006;
 }

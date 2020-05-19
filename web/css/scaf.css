@@ -111,7 +111,6 @@
     font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
     background-image: url(../Imagenes/Fondos/background.jpg);
 }
-
 .inputboxBner {
     border-right: #666666 1px solid;
     border-top: #666666 1px solid;
@@ -121,7 +120,6 @@
     color: #6F6;
     font-family: Lucida Grande, Lucida Sans, Arial, sans-serif
 }
-
 .inputboxRed {
     border-right: #666666 1px solid;
     border-top: #666666 1px solid;
@@ -132,7 +130,6 @@
     border-bottom: #666666 1px solid;
     font-family: Lucida Grande, Lucida Sans, Arial, sans-serif
 }
-
 .inputboxFocusRed {
     border-right: #666666 1px solid;
     border-top: #666666 1px solid;
@@ -155,7 +152,6 @@
     font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; 
     background-color: #DFFFDF;
 }
-
 .inputSinBorde {
     border-right: 0px; 
     border-top: 0px; 

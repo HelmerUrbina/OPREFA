@@ -1,5 +1,5 @@
+var theme = "ui-redmond"; // ui-start  -- ui-redmond -- ui-lightness -- arctic -- darkblue -- fresh
 function getTheme() {
-    var theme = "ui-redmond";
     var url = "/OPREFA/css/styles/jqx." + theme + ".css";
     var hasStyle = false;
     if (document.styleSheets) {
@@ -24,7 +24,6 @@ function getTheme() {
     return theme;
 }
 
-var theme = 'ui-redmond';
 try {
     if (jQuery) {
         theme = getTheme();

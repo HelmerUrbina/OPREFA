@@ -47,8 +47,7 @@
             $(document).ready(function () {
                 fn_Refrescar();
                 var theme = getTheme();
-                $('#div_Normas').jqxExpander({showArrow: false, toggleMode: 'none', width: '300px', height: '200px'});
-                $('#div_Descarga').jqxExpander({showArrow: false, toggleMode: 'none', width: '300px', height: '190px'});
+                $('#div_Normas').jqxExpander({showArrow: false, toggleMode: 'none', width: '300px', height: '390px'});
                 $('#div_Comunicados').jqxExpander({showArrow: false, toggleMode: 'none', width: '300px', height: '390px'});
                 $("#txt_Usuario").jqxInput({theme: theme, placeHolder: "Usuario", height: 25, width: 150});
                 $("#txt_Password").jqxPasswordInput({theme: theme, placeHolder: "Contraseña", width: 150, height: 25, showStrength: true, showStrengthPosition: "right"});
@@ -123,20 +122,12 @@
                         <div style="text-align: center">NORMAS LEGALES</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/DL1440-LeydelSistemaNacionaldePresupuestoPublico.pdf" target="_blank">DL 1440 - Ley del Sistema Nacional de Presupuesto Público</a></li>
-                                <li class="link"> 2. <a href="Descarga/DU014_2019.pdf" target="_blank">Decreto Urgencia N° 014-2019</a></li>
-                                <li class="link"> 3. <a href="Descarga/Anexo4-FtesFinanciamiento2020.pdf" target="_blank">Fuentes de Financiamiento 2020 - MEF</a></li>
-                                <li class="link"> 4. <a href="Descarga/Anexo1-ClasificadoresIngreso2020.pdf" target="_blank">Clasificador de Ingresos 2020 - MEF</a></li>
-                                <li class="link"> 5. <a href="Descarga/Anexo2-ClasificadoresGasto2020.pdf" target="_blank">Clasificador de Gastos 2020 - MEF</a></li>
-                                <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id='div_Descarga' style="position: relative">
-                        <div style="text-align: center">MANUALES</div>
-                        <div>
-                            <ul>
-                                <li class="link"> 1. <a href="Descarga/OPREFA_ManualUsuario.pdf" target="_blank">OPREFA - Manual de Usuario</a></li>
+                                <li class="link"> 1. <a href="Descarga/DL_19846-1972.pdf" target="_blank">DL 19846 -1972 : Régimen de Pensiones del Personal Militar y Policial de las Fuerza Armada y Fuerzas Policiales, por Servicio al Estado.</a></li>
+                                <li class="link"> 2. <a href="Descarga/DL_1133-2012.pdf" target="_blank">DL 1133 - 2012 : Ordenamiento Definitivo del Régimen de Pensiones del Personal Militar y Policial.</a></li>
+                                <li class="link"> 3. <a href="Descarga/Ley_30683-2017.pdf" target="_blank">Ley 30683 - 2017 : Ley que Modifica el DL 1133, a fin de regular las Pensiones de los pensionistas del DL 19846.</a></li>
+                                <li class="link"> 4. <a href="Descarga/DL1440-LeydelSistemaNacionaldePresupuestoPublico.pdf" target="_blank">DL 1440 - Ley del Sistema Nacional de Presupuesto Público.</a></li>
+                                <li class="link"> 5. <a href="Descarga/DU014_2019.pdf" target="_blank">Decreto Urgencia N° 014-2019.</a></li>
+                                <li class="link"> 6. <a href="Descarga/Anexo4-FtesFinanciamiento2020.pdf" target="_blank">Fuentes de Financiamiento 2020 - MEF.</a></li>
                             </ul>
                         </div>
                     </div>
@@ -144,8 +135,8 @@
                 <td align="center" style="width: 450px;">&nbsp;
                     <form method="post" id="frm_Login" >
                         <div class="header">INGRESO AL SISTEMA</div>
-                        <div style="float: left; margin-top: 60px; margin-left: 15px "> 
-                            <img src="Imagenes/Logos/login.jpg" alt="Icon-Login" width="160px" height="150px"/>
+                        <div style="float: left; margin-top: 40px; margin-left: 10px "> 
+                            <img src="Imagenes/Logos/login.jpg" alt="Icon-Login" style="border-radius: 50%;" width="180px" height="180px"/>
                         </div>
                         <div id="content">
                             <table >
@@ -164,13 +155,13 @@
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><label for="verificacion">Escriba estos caracteres </label></td>
+                                    <td colspan="2"><label for="verificacion">Escriba estos caracteres</label></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><div id="img_stickyImg"></div></td>
                                 </tr> 
                                 <tr>
-                                    <td colspan="2" class="link"><a href="javascript:fn_Refrescar();">Refrescar</a></td>
+                                    <td colspan="2" class="link" style="font-size: 9px"><a href="javascript:fn_Refrescar();">Refrescar</a></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -179,7 +170,7 @@
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
-                            </table> 
+                            </table>
                             <div class="Summit">
                                 <div style="text-align: center;"><input name="btn_Ingresar" id="btn_Ingresar" type="button" value="Ingresar"/></div>
                             </div>
