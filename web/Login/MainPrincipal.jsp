@@ -74,7 +74,7 @@
                 var theme = getTheme();
                 var posicionX, posicionY;
                 var ancho = 400;
-                var alto = 200;
+                var alto = 210;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_WindowPassword').jqxWindow({
@@ -339,7 +339,6 @@
         <div style="font-size: 20px;">LAS UU/OO QUE NO HAN CUMPLIDO CON EL REGISTRO DE INFORMACIÓN EN EL MÓDULO PAC-PROCESOS, <strong>NO PODRÁN REALIZAR LA EJECUCIÓN PRESUPUESTARIA.</strong></div> 
     </div>
 </div>
-
 <script type="text/javascript">
     //fn_verMensaje();
 </script>

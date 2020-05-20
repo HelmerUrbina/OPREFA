@@ -8,7 +8,7 @@
     <center>
         <div class="TituloFormato" style="height: 50px">&nbsp;</div>
         <div style="align-content: center"><img src="../Imagenes/Fondos/manto.png"></div>
-        <div class="TituloDetalle">OFICINA PREVISIONAL DE LAS FUERZAS ARMADAS</div>
-        <div class="TituloDetalle">Todos los derechos reservados</div>
+        <div class="textoBoton">OFICINA PREVISIONAL DE LAS FUERZAS ARMADAS</div>
+        <div class="textoBoton">Todos los derechos reservados</div>
     </center>
 </div>
