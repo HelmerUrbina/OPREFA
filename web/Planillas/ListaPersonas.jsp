@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ListaDocumentos
-    Created on : 31/03/2020, 01:36:27 PM
+    Document   : ListaPersonas
+    Created on : 20/05/2020, 06:50:07 PM
     Author     : H-URBINA-M
 --%>
 
@@ -670,7 +670,7 @@
 <div id="div_GrillaPrincipal"></div>
 <div id="div_VentanaPrincipal" style="display: none">
     <div>
-        <span style="float: left">REGISTRO BENEFICIARIOS</span>
+        <span style="float: left">REGISTRO MESA DE PARTES</span>
     </div>
     <div style="overflow: hidden">
         <form id="frm_Documentos" name="frm_Documentos" enctype="multipart/form-data" action="javascript: fn_GrabarDatos();" method="post">
