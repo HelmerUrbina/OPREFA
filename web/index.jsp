@@ -13,7 +13,7 @@
 <!DOCTYPE html> 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta http-equiv="Expires" content="0"/>
         <meta http-equiv="Last-Modified" content="0"/>
         <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
@@ -142,14 +142,14 @@
                             <table >
                                 <tr>
                                     <td><label for="usuario">Usuario </label></td>
-                                    <td><input type="text" name="txt_Usuario" id="txt_Usuario"/></td>
+                                    <td><input type="text" name="txt_Usuario" id="txt_Usuario" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><label for="password">Password </label></td>
-                                    <td><input type="password" name="txt_Password" id="txt_Password"/></td>
+                                    <td><input type="password" name="txt_Password" id="txt_Password" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
@@ -165,7 +165,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><input type="text" name="txt_Verificacion" id="txt_Verificacion"/></td>
+                                    <td><input type="text" name="txt_Verificacion" id="txt_Verificacion" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>

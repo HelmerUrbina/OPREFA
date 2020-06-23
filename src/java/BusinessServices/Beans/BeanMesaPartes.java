@@ -12,7 +12,7 @@ import java.sql.Date;
  *
  * @author H-URBINA-M
  */
-public class BeanDocumentos implements Serializable {
+public class BeanMesaPartes implements Serializable {
 
     private String Mode;
     private String Periodo;
@@ -22,7 +22,7 @@ public class BeanDocumentos implements Serializable {
     private String Institucion;
     private String Area;
     private String Prioridad;
-    private String TipoDocumento;
+    private String Documento;
     private String NumeroDocumento;
     private String Clasificacion;
     private String Estado;
@@ -103,12 +103,12 @@ public class BeanDocumentos implements Serializable {
         this.Prioridad = Prioridad;
     }
 
-    public String getTipoDocumento() {
-        return TipoDocumento;
+    public String getDocumento() {
+        return Documento;
     }
 
-    public void setTipoDocumento(String TipoDocumento) {
-        this.TipoDocumento = TipoDocumento;
+    public void setDocumento(String Documento) {
+        this.Documento = Documento;
     }
 
     public String getNumeroDocumento() {

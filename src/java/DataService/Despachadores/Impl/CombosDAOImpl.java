@@ -4662,10 +4662,10 @@ public class CombosDAOImpl implements CombosDAO {
     }
 
     @Override
-    public List getTipoDocumentos() {
+    public List getDocumentos() {
         lista = new LinkedList<>();
-        sql = "SELECT NTIPO_DOCUMENTO_CODIGO AS CODIGO, VTIPO_DOCUMENTO_DESCRIPCION AS DESCRIPCION "
-                + "FROM OPREFA_TIPO_DOCUMENTOS WHERE "
+        sql = "SELECT NDOCUMENTO_CODIGO AS CODIGO, VDOCUMENTO_DESCRIPCION AS DESCRIPCION "
+                + "FROM OPREFA_DOCUMENTOS WHERE "
                 + "CESTADO_CODIGO!='AN' "
                 + "ORDER BY DESCRIPCION";
         try {
@@ -4678,7 +4678,7 @@ public class CombosDAOImpl implements CombosDAO {
                 lista.add(comun);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener getTipoDocumentos() " + e.getMessage());
+            System.out.println("Error al obtener getDocumentos() " + e.getMessage());
         } finally {
             try {
                 if (objResultSet != null) {

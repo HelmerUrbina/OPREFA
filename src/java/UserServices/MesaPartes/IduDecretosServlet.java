@@ -5,7 +5,7 @@
  */
 package UserServices.MesaPartes;
 
-import BusinessServices.Beans.BeanDocumentos;
+import BusinessServices.Beans.BeanMesaPartes;
 import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.DecretosDAO;
@@ -36,7 +36,7 @@ public class IduDecretosServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanDocumentos objBnDecreto;
+    private BeanMesaPartes objBnDecreto;
     private Connection objConnection;
     private DecretosDAO objDsDecreto;
     private BeanMsgerr objBnMsgerr;
@@ -64,7 +64,7 @@ public class IduDecretosServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnDecreto = new BeanDocumentos();
+        objBnDecreto = new BeanMesaPartes();
         objBnDecreto.setMode(request.getParameter("mode"));
         objBnDecreto.setPeriodo(request.getParameter("periodo"));
         objBnDecreto.setTipo(request.getParameter("tipo"));
@@ -86,7 +86,7 @@ public class IduDecretosServlet extends HttpServlet {
                 String lista[][] = Utiles.Utiles.generaLista(request.getParameter("lista"), 1);
                 for (String[] item : lista) {
                     objBnDecreto.setMode("I");
-                    objBnDecreto.setTipoDocumento(item[0].trim());
+                    objBnDecreto.setDocumento(item[0].trim());
                     k = objDsDecreto.iduDecretarTipoDecreto(objBnDecreto, objUsuario.getUsuario());
                 }
             }
@@ -94,14 +94,13 @@ public class IduDecretosServlet extends HttpServlet {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(objUsuario.getUsuario());
-            objBnMsgerr.setTabla("OPREFA_DOCUMENTOS_DECRETOS");
+            objBnMsgerr.setTabla("OPREFA_MESA_PARTES_DECRETOS");
             objBnMsgerr.setTipo(objBnDecreto.getMode());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);
             result = objBnMsgerr.getDescripcion();
         }
         // EN CASO DE NO HABER PROBLEMAS RETORNAMOS UNA NUEVA CONSULTA CON TODOS LOS DATOS.
-        response.setContentType("text/html;charset=UTF-8");
         if (result == null) {
             try (PrintWriter out = response.getWriter()) {
                 out.print("GUARDO");

@@ -5,7 +5,7 @@
  */
 package UserServices.MesaPartes;
 
-import BusinessServices.Beans.BeanDocumentos;
+import BusinessServices.Beans.BeanMesaPartes;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.CombosDAO;
 import DataService.Despachadores.DecretosDAO;
@@ -35,7 +35,7 @@ public class DecretosServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanDocumentos objBnDecreto;
+    private BeanMesaPartes objBnDecreto;
     private Connection objConnection;
     private DecretosDAO objDsDecreto;
     private CombosDAO objDsCombo;
@@ -62,7 +62,7 @@ public class DecretosServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnDecreto = new BeanDocumentos();
+        objBnDecreto = new BeanMesaPartes();
         objBnDecreto.setMode(request.getParameter("mode"));
         objBnDecreto.setPeriodo(request.getParameter("periodo"));
         objBnDecreto.setMes(request.getParameter("mes"));

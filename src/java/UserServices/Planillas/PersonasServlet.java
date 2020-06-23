@@ -76,10 +76,10 @@ public class PersonasServlet extends HttpServlet {
                 request.removeAttribute("objPrioridades");
             }
             request.setAttribute("objPrioridades", objDsCombo.getPrioridades());
-            if (request.getAttribute("objTipoDocumentos") != null) {
-                request.removeAttribute("objTipoDocumentos");
+            if (request.getAttribute("objDocumentos") != null) {
+                request.removeAttribute("objDocumentos");
             }
-            request.setAttribute("objTipoDocumentos", objDsCombo.getTipoDocumentos());
+            request.setAttribute("objDocumentos", objDsCombo.getDocumentos());
             if (request.getAttribute("objClasificaciones") != null) {
                 request.removeAttribute("objClasificaciones");
             }

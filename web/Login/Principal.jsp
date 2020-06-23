@@ -4,9 +4,8 @@
     Author     : H-URBINA-M
 --%>
 <%@include file="../WEB-INF/jspf/aaadmin.jspf" %>
-<%@page contentType="text/html" import="BusinessServices.Beans.BeanUsuario" pageEncoding="UTF-8"  autoFlush='true' session="true"%>
-<%
-    BeanUsuario Usuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
+<%@page contentType="text/html" import="BusinessServices.Beans.BeanUsuario" pageEncoding="UTF-8" autoFlush='true' session="true"%>
+<%    BeanUsuario Usuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
 %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores;
 
-import BusinessServices.Beans.BeanDocumentos;
+import BusinessServices.Beans.BeanMesaPartes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,22 +15,22 @@ import java.util.List;
  */
 public interface DecretosDAO {
 
-    public List getListaDocumentosPendientes(BeanDocumentos objBnDecreto, String usuario);
+    public List getListaDocumentosPendientes(BeanMesaPartes objBnDecreto, String usuario);
 
-    public List getListaDocumentosDecretados(BeanDocumentos objBnDecreto, String usuario);
+    public List getListaDocumentosDecretados(BeanMesaPartes objBnDecreto, String usuario);
 
-    public List getListaDocumentosRespuesta(BeanDocumentos objDocumento, String usuario);
+    public List getListaDocumentosRespuesta(BeanMesaPartes objDocumento, String usuario);
 
-    public int iduDecreto(BeanDocumentos objBnDecreto, String usuario);
+    public int iduDecreto(BeanMesaPartes objBnDecreto, String usuario);
 
-    public int iduDecretarTipoDecreto(BeanDocumentos objBnDecreto, String usuario);
+    public int iduDecretarTipoDecreto(BeanMesaPartes objBnDecreto, String usuario);
 
     public String getDocumentosPendientes(String usuario);
 
-    public BeanDocumentos getDecreto(BeanDocumentos objBeanDecreto, String usuario);
+    public BeanMesaPartes getDecreto(BeanMesaPartes objBeanDecreto, String usuario);
 
-    public ArrayList getListaDecretoTipoDecretos(BeanDocumentos objBeanDecreto, String usuario);
+    public ArrayList getListaDecretoTipoDecretos(BeanMesaPartes objBeanDecreto, String usuario);
 
-    public ArrayList getListaDetalleDocumentoDecretado(BeanDocumentos objBeanDecreto, String usuario);
+    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaPartes objBeanDecreto, String usuario);
 
 }

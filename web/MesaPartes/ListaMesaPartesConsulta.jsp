@@ -12,7 +12,7 @@
     var archivo = null;
     var codigo = null;
     var lista = new Array();
-    <c:forEach var="d" items="${objDocumentosConsulta}">
+    <c:forEach var="d" items="${objMesaPartesConsulta}">
     var result = {numero: '${d.numero}', numeroDocumento: '${d.numeroDocumento}', asunto: '${d.asunto}',
         institucion: '${d.institucion}', prioridad: '${d.prioridad}', fecha: '${d.fecha}', estado: '${d.estado}', firma: '${d.postFirma}',
         legajo: '${d.legajo}', folio: '${d.folio}', usuarioResponsable: '${d.usuarioResponsable}', referencia: '${d.referencia}',

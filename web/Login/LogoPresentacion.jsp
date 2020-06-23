@@ -3,9 +3,6 @@
     Created on : 05/03/2015, 09:22:18 AM
     Author     : H-URBINA-M
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
         <link href="../css/scaf.css" rel="stylesheet" type="text/css">

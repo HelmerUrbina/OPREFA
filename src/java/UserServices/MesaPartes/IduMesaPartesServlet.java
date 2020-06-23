@@ -5,11 +5,10 @@
  */
 package UserServices.MesaPartes;
 
-import BusinessServices.Beans.BeanDocumentos;
+import BusinessServices.Beans.BeanMesaPartes;
 import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanUsuario;
-import DataService.Despachadores.DocumentosDAO;
-import DataService.Despachadores.Impl.DocumentosDAOImpl;
+import DataService.Despachadores.Impl.MesaPartesDAOImpl;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
 import DataService.Despachadores.MsgerrDAO;
 import Utiles.Utiles;
@@ -40,22 +39,23 @@ import javax.servlet.http.Part;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import DataService.Despachadores.MesaPartesDAO;
 
 /**
  *
  * @author H-URBINA-M
  */
-@WebServlet(name = "IduDocumentosServlet", urlPatterns = {"/IduDocumentos"})
+@WebServlet(name = "IduMesaPartesServlet", urlPatterns = {"/IduMesaPartes"})
 @MultipartConfig(location = "D:/OPREFA/MesaPartes/Documentos")
-public class IduDocumentosServlet extends HttpServlet {
+public class IduMesaPartesServlet extends HttpServlet {
 
     private ServletConfig config = null;
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanDocumentos objBnDocumentos;
+    private BeanMesaPartes objBnDocumentos;
     private Connection objConnection;
-    private DocumentosDAO objDsDocumentos;
+    private MesaPartesDAO objDsDocumentos;
     private BeanMsgerr objBnMsgerr = null;
     private MsgerrDAO objDsMsgerr;
     private static final long serialVersionUID = 1L;
@@ -77,7 +77,6 @@ public class IduDocumentosServlet extends HttpServlet {
         config = this.getServletConfig();
         context = config.getServletContext();
         session = request.getSession(true);
-        response.setContentType("text/html;charset=UTF-8");
         String result = null;
         int k = 0;
         String resulDetalle = null;
@@ -90,7 +89,7 @@ public class IduDocumentosServlet extends HttpServlet {
         sdf.setLenient(false); //No Complaciente en Fecha
         java.util.Date fecha_doc = sdf.parse(Utiles.checkFecha(request.getParameter("fechaDocumento")));
         objConnection = (Connection) context.getAttribute("objConnection");
-        objBnDocumentos = new BeanDocumentos();
+        objBnDocumentos = new BeanMesaPartes();
         objBnDocumentos.setMode(request.getParameter("mode"));
         objBnDocumentos.setPeriodo(request.getParameter("periodo"));
         objBnDocumentos.setTipo(request.getParameter("tipo"));
@@ -98,7 +97,7 @@ public class IduDocumentosServlet extends HttpServlet {
         objBnDocumentos.setMes(request.getParameter("mes"));
         objBnDocumentos.setInstitucion(request.getParameter("institucion"));
         objBnDocumentos.setPrioridad(request.getParameter("prioridad"));
-        objBnDocumentos.setTipoDocumento(request.getParameter("tipoDocumento"));
+        objBnDocumentos.setDocumento(request.getParameter("documento"));
         objBnDocumentos.setNumeroDocumento(request.getParameter("numeroDocumento"));
         objBnDocumentos.setClasificacion(request.getParameter("clasificacion"));
         objBnDocumentos.setFecha(new java.sql.Date(fecha_doc.getTime()));
@@ -109,7 +108,7 @@ public class IduDocumentosServlet extends HttpServlet {
         objBnDocumentos.setArea(request.getParameter("area"));
         objBnDocumentos.setUsuarioResponsable(request.getParameter("usuario"));
         objBnDocumentos.setReferencia(request.getParameter("referencia"));
-        objDsDocumentos = new DocumentosDAOImpl(objConnection);
+        objDsDocumentos = new MesaPartesDAOImpl(objConnection);
         if (objBnDocumentos.getTipo().equals("E") && !objBnDocumentos.getMode().equals("D")) {
             Collection<Part> parts = request.getParts();
             for (Part part : parts) {
@@ -129,13 +128,13 @@ public class IduDocumentosServlet extends HttpServlet {
                 }
             }
         }
-        k = objDsDocumentos.iduDocumento(objBnDocumentos, objUsuario.getUsuario());
+        k = objDsDocumentos.iduMesaParte(objBnDocumentos, objUsuario.getUsuario());
         if (k == 0) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             result = "ERROR";
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(objUsuario.getUsuario());
-            objBnMsgerr.setTabla("OPREFA_DOCUMENTOS");
+            objBnMsgerr.setTabla("OPREFA_MESA_PARTES");
             objBnMsgerr.setTipo(objBnDocumentos.getMode());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);
@@ -182,7 +181,7 @@ public class IduDocumentosServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException | JRException | PrinterException ex) {
-            Logger.getLogger(IduDocumentosServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IduMesaPartesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -200,7 +199,7 @@ public class IduDocumentosServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException | JRException | PrinterException ex) {
-            Logger.getLogger(IduDocumentosServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IduMesaPartesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

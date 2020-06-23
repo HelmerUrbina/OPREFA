@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores.Impl;
 
-import BusinessServices.Beans.BeanDocumentos;
+import BusinessServices.Beans.BeanMesaPartes;
 import BusinessServices.Beans.BeanMsgerr;
 import DataService.Despachadores.DecretosDAO;
 import DataService.Despachadores.MsgerrDAO;
@@ -28,7 +28,7 @@ public class DecretosDAOImpl implements DecretosDAO {
     private List lista;
     private String sql;
     private ResultSet objResultSet;
-    private BeanDocumentos objBnDecreto;
+    private BeanMesaPartes objBnDecreto;
     private PreparedStatement objPreparedStatement;
     private MsgerrDAO objDsMsgerr;
     private BeanMsgerr objBnMsgerr;
@@ -39,20 +39,20 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public List getListaDocumentosPendientes(BeanDocumentos objBeanDecreto, String usuario) {
+    public List getListaDocumentosPendientes(BeanMesaPartes objBeanDecreto, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT LPAD(NDOCUMENTO_CODIGO,5,0) AS CODIGO, "
-                + "PK_UTIL.FUN_TIPO_DOCUMENTO(NTIPO_DOCUMENTO_CODIGO)||'-'||VDOCUMENTO_NUMERO AS NUMERO, "
-                + "REPLACE(REGEXP_REPLACE(UPPER(VDOCUMENTO_ASUNTO),'''',''),'\n"
+        sql = "SELECT LPAD(NMESA_PARTE_CODIGO,5,0) AS CODIGO, "
+                + "PK_UTIL.FUN_DOCUMENTO(NDOCUMENTO_CODIGO)||'-'||VMESA_PARTE_NUMERO AS NUMERO, "
+                + "REPLACE(REGEXP_REPLACE(UPPER(VMESA_PARTE_ASUNTO),'''',''),'\n"
                 + "', ' ') AS ASUNTO, PK_UTIL.FUN_PRIORIDAD(NPRIORIDAD_CODIGO) AS PRIORIDAD, "
                 + "PK_UTIL.FUN_INSTITUCION(NINSTITUCION_CODIGO) AS INSTITUCION, "
-                + "TO_DATE(DDOCUMENTO_FECHA+1) AS FECHA_DOCUMENTO, TO_DATE(DDOCUMENTO_RECEPCION+1) AS FECHA_RECEPCION, "
-                + "REGEXP_REPLACE(UPPER(VDOCUMENTO_POST_FIRMA),'''','') AS FIRMA, "
-                + "VDOCUMENTO_DIGITAL AS DOCUMENTO "
-                + "FROM OPREFA_DOCUMENTOS WHERE "
+                + "TO_DATE(DMESA_PARTE_FECHA+1) AS FECHA_MESA_PARTE, TO_DATE(DMESA_PARTE_RECEPCION+1) AS FECHA_RECEPCION, "
+                + "REGEXP_REPLACE(UPPER(VMESA_PARTE_POST_FIRMA),'''','') AS FIRMA, "
+                + "VMESA_PARTE_DIGITAL AS MESA_PARTE "
+                + "FROM OPREFA_MESA_PARTES WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "CMES_CODIGO=? AND "
-                + "CDOCUMENTO_TIPO=? AND "
+                + "CMESA_PARTE_TIPO=? AND "
                 + "CESTADO_CODIGO='PE'"
                 + "ORDER BY CODIGO DESC";
         try {
@@ -62,16 +62,16 @@ public class DecretosDAOImpl implements DecretosDAO {
             objPreparedStatement.setString(3, objBeanDecreto.getTipo());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnDecreto = new BeanDocumentos();
+                objBnDecreto = new BeanMesaPartes();
                 objBnDecreto.setNumero(objResultSet.getString("CODIGO"));
                 objBnDecreto.setNumeroDocumento(objResultSet.getString("NUMERO"));
                 objBnDecreto.setAsunto(objResultSet.getString("ASUNTO"));
                 objBnDecreto.setPrioridad(objResultSet.getString("PRIORIDAD"));
                 objBnDecreto.setInstitucion(objResultSet.getString("INSTITUCION"));
-                objBnDecreto.setFecha(objResultSet.getDate("FECHA_DOCUMENTO"));
+                objBnDecreto.setFecha(objResultSet.getDate("FECHA_MESA_PARTE"));
                 objBnDecreto.setFechaRecepcion(objResultSet.getDate("FECHA_RECEPCION"));
                 objBnDecreto.setPostFirma(objResultSet.getString("FIRMA"));
-                objBnDecreto.setArchivo(objResultSet.getString("DOCUMENTO"));
+                objBnDecreto.setArchivo(objResultSet.getString("MESA_PARTE"));
                 lista.add(objBnDecreto);
             }
         } catch (SQLException e) {
@@ -90,24 +90,24 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public List getListaDocumentosDecretados(BeanDocumentos objBeanDecreto, String usuario) {
+    public List getListaDocumentosDecretados(BeanMesaPartes objBeanDecreto, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT LPAD(DOC.NDOCUMENTO_CODIGO,5,0) AS CODIGO, DEC.NDOCUMENTO_DECRETO_CODIGO AS DECRETO, "
-                + "PK_UTIL.FUN_TIPO_DOCUMENTO(DOC.NTIPO_DOCUMENTO_CODIGO)||'-'||DOC.VDOCUMENTO_NUMERO AS NUMERO, "
-                + "REPLACE(REGEXP_REPLACE(UPPER(DOC.VDOCUMENTO_ASUNTO),'''',''),'\n"
+        sql = "SELECT LPAD(DOC.NMESA_PARTE_CODIGO,5,0) AS CODIGO, DEC.NMESA_PARTE_DECRETO_CODIGO AS DECRETO, "
+                + "PK_UTIL.FUN_DOCUMENTO(DOC.NDOCUMENTO_CODIGO)||'-'||DOC.VMESA_PARTE_NUMERO AS NUMERO, "
+                + "REPLACE(REGEXP_REPLACE(UPPER(DOC.VMESA_PARTE_ASUNTO),'''',''),'\n"
                 + "', ' ') AS ASUNTO, PK_UTIL.FUN_PRIORIDAD(DEC.NPRIORIDAD_CODIGO) AS PRIORIDAD, "
                 + "PK_UTIL.FUN_INSTITUCION(DOC.NINSTITUCION_CODIGO) AS INSTITUCION, "
-                + "TO_DATE(DOC.DDOCUMENTO_FECHA+1) AS FECHA_DOCUMENTO,  "
-                + "REGEXP_REPLACE(UPPER(DEC.VDOCUMENTO_DECRETO_DESCRIPCION),'''','') AS COMENTARIO, "
+                + "TO_DATE(DOC.DMESA_PARTE_FECHA+1) AS FECHA_MESA_PARTE,  "
+                + "REGEXP_REPLACE(UPPER(DEC.VMESA_PARTE_DECRETO_DESCRIPCIO),'''','') AS COMENTARIO, "
                 + "PK_UTIL.FUN_USUARIO(DEC.VUSUARIO_RESPONSABLE) AS USUARIO_RESPONSABLE,"
-                + "DOC.VDOCUMENTO_DIGITAL AS DOCUMENTO "
-                + "FROM OPREFA_DOCUMENTOS DOC INNER JOIN OPREFA_DOCUMENTOS_DECRETOS DEC ON ("
+                + "DOC.VMESA_PARTE_DIGITAL AS MESA_PARTE "
+                + "FROM OPREFA_MESA_PARTES DOC INNER JOIN OPREFA_MESA_PARTES_DECRETOS DEC ON ("
                 + "DOC.CPERIODO_CODIGO=DEC.CPERIODO_CODIGO AND "
-                + "DOC.CDOCUMENTO_TIPO=DEC.CDOCUMENTO_TIPO AND "
-                + "DOC.NDOCUMENTO_CODIGO=DEC.NDOCUMENTO_CODIGO) WHERE "
+                + "DOC.CMESA_PARTE_TIPO=DEC.CMESA_PARTE_TIPO AND "
+                + "DOC.NMESA_PARTE_CODIGO=DEC.NMESA_PARTE_CODIGO) WHERE "
                 + "DOC.CPERIODO_CODIGO=? AND "
                 + "DOC.CMES_CODIGO=? AND "
-                + "DOC.CDOCUMENTO_TIPO=? AND "
+                + "DOC.CMESA_PARTE_TIPO=? AND "
                 + "DEC.CESTADO_CODIGO!='AN' "
                 + "ORDER BY CODIGO DESC";
         try {
@@ -117,17 +117,17 @@ public class DecretosDAOImpl implements DecretosDAO {
             objPreparedStatement.setString(3, objBeanDecreto.getTipo());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnDecreto = new BeanDocumentos();
+                objBnDecreto = new BeanMesaPartes();
                 objBnDecreto.setNumero(objResultSet.getString("CODIGO"));
                 objBnDecreto.setDecreto(objResultSet.getInt("DECRETO"));
                 objBnDecreto.setNumeroDocumento(objResultSet.getString("NUMERO"));
                 objBnDecreto.setAsunto(objResultSet.getString("ASUNTO"));
                 objBnDecreto.setPrioridad(objResultSet.getString("PRIORIDAD"));
                 objBnDecreto.setInstitucion(objResultSet.getString("INSTITUCION"));
-                objBnDecreto.setFecha(objResultSet.getDate("FECHA_DOCUMENTO"));
+                objBnDecreto.setFecha(objResultSet.getDate("FECHA_MESA_PARTE"));
                 objBnDecreto.setPostFirma(objResultSet.getString("COMENTARIO"));
                 objBnDecreto.setUsuarioResponsable(objResultSet.getString("USUARIO_RESPONSABLE"));
-                objBnDecreto.setArchivo(objResultSet.getString("DOCUMENTO"));
+                objBnDecreto.setArchivo(objResultSet.getString("MESA_PARTE"));
                 lista.add(objBnDecreto);
             }
         } catch (SQLException e) {
@@ -146,44 +146,44 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public List getListaDocumentosRespuesta(BeanDocumentos objBeanDocumento, String usuario) {
+    public List getListaDocumentosRespuesta(BeanMesaPartes objBeanDocumento, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT DOC.CPERIODO_CODIGO AS PERIODO, LPAD(DOC.NDOCUMENTO_CODIGO,5,0) AS NUMERO, "
-                + "DEC.NDOCUMENTO_DECRETO_CODIGO AS CODIGO, "
+        sql = "SELECT DOC.CPERIODO_CODIGO AS PERIODO, LPAD(DOC.NMESA_PARTE_CODIGO,5,0) AS NUMERO, "
+                + "DEC.NMESA_PARTE_DECRETO_CODIGO AS CODIGO, "
                 + "PK_UTIL.FUN_INSTITUCION(DOC.NINSTITUCION_CODIGO) AS INSTITUCION, "
-                + "PK_UTIL.FUN_TIPO_DOCUMENTO(DOC.NTIPO_DOCUMENTO_CODIGO)||'-'||DOC.VDOCUMENTO_NUMERO AS DOCUMENTO, "
-                + "REPLACE(REGEXP_REPLACE(UPPER(DOC.VDOCUMENTO_ASUNTO),'''',''),'\n"
+                + "PK_UTIL.FUN_DOCUMENTO(DOC.NDOCUMENTO_CODIGO)||'-'||DOC.VMESA_PARTE_NUMERO AS MESA_PARTE, "
+                + "REPLACE(REGEXP_REPLACE(UPPER(DOC.VMESA_PARTE_ASUNTO),'''',''),'\n"
                 + "', ' ') AS ASUNTO, PK_UTIL.FUN_PRIORIDAD(DEC.NPRIORIDAD_CODIGO) AS PRIORIDAD, "
-                + "TO_DATE(DOC.DDOCUMENTO_FECHA+1) AS FECHA_DOCUMENTO, "
-                + "DOC.VDOCUMENTO_POST_FIRMA AS POST_FIRMA, DOC.NDOCUMENTO_LEGAJOS AS LEGAJO,"
-                + "DOC.NDOCUMENTO_FOLIOS AS FOLIO,"
-                + "DOC.VDOCUMENTO_DIGITAL AS ARCHIVO, "
-                + "DEC.VDOCUMENTO_DECRETO_DESCRIPCION AS COMENTARIO, "
+                + "TO_DATE(DOC.DMESA_PARTE_FECHA+1) AS FECHA_MESA_PARTE, "
+                + "DOC.VMESA_PARTE_POST_FIRMA AS POST_FIRMA, DOC.NMESA_PARTE_LEGAJOS AS LEGAJO,"
+                + "DOC.NMESA_PARTE_FOLIOS AS FOLIO,"
+                + "DOC.VMESA_PARTE_DIGITAL AS ARCHIVO, "
+                + "DEC.VMESA_PARTE_DECRETO_DESCRIPCIO AS COMENTARIO, "
                 + "PK_UTIL.FUN_DESCRIPCION_ESTADO(DEC.CESTADO_CODIGO) AS ESTADO "
-                + "FROM OPREFA_DOCUMENTOS DOC JOIN OPREFA_DOCUMENTOS_DECRETOS DEC ON ("
+                + "FROM OPREFA_MESA_PARTES DOC JOIN OPREFA_MESA_PARTES_DECRETOS DEC ON ("
                 + "DOC.CPERIODO_CODIGO=DEC.CPERIODO_CODIGO AND "
-                + "DOC.CDOCUMENTO_TIPO=DEC.CDOCUMENTO_TIPO AND "
-                + "DOC.NDOCUMENTO_CODIGO=DEC.NDOCUMENTO_CODIGO) WHERE "
+                + "DOC.CMESA_PARTE_TIPO=DEC.CMESA_PARTE_TIPO AND "
+                + "DOC.NMESA_PARTE_CODIGO=DEC.NMESA_PARTE_CODIGO) WHERE "
                 + "DOC.CPERIODO_CODIGO=? AND "
                 + "DEC.VUSUARIO_RESPONSABLE=? AND "
                 + "DEC.CESTADO_CODIGO IN ('AC','RE') AND "
-                + "DOC.CDOCUMENTO_TIPO='E' "
-                + "ORDER BY DEC.CESTADO_CODIGO, DOC.NDOCUMENTO_CODIGO DESC";
+                + "DOC.CMESA_PARTE_TIPO='E' "
+                + "ORDER BY DEC.CESTADO_CODIGO, DOC.NMESA_PARTE_CODIGO DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanDocumento.getPeriodo());
             objPreparedStatement.setString(2, objBeanDocumento.getUsuarioResponsable());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnDecreto = new BeanDocumentos();
+                objBnDecreto = new BeanMesaPartes();
                 objBnDecreto.setPeriodo(objResultSet.getString("PERIODO"));
                 objBnDecreto.setNumero(objResultSet.getString("NUMERO"));
                 objBnDecreto.setDecreto(objResultSet.getInt("CODIGO"));
                 objBnDecreto.setInstitucion(objResultSet.getString("INSTITUCION"));
-                objBnDecreto.setNumeroDocumento(objResultSet.getString("DOCUMENTO"));
+                objBnDecreto.setNumeroDocumento(objResultSet.getString("MESA_PARTE"));
                 objBnDecreto.setAsunto(objResultSet.getString("ASUNTO"));
                 objBnDecreto.setPrioridad(objResultSet.getString("PRIORIDAD"));
-                objBnDecreto.setFecha(objResultSet.getDate("FECHA_DOCUMENTO"));
+                objBnDecreto.setFecha(objResultSet.getDate("FECHA_MESA_PARTE"));
                 objBnDecreto.setPostFirma(objResultSet.getString("POST_FIRMA"));
                 objBnDecreto.setLegajo(objResultSet.getInt("LEGAJO"));
                 objBnDecreto.setFolio(objResultSet.getInt("FOLIO"));
@@ -208,8 +208,8 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public int iduDecreto(BeanDocumentos objBnDecreto, String usuario) {
-        sql = "{CALL SP_IDU_DECRETO(?,?,?,?,?,?,?,?,?,?,?,?)}";
+    public int iduDecreto(BeanMesaPartes objBnDecreto, String usuario) {
+        sql = "{CALL SP_IDU_MESA_PARTES_DECRETO(?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
             cs.setString(1, objBnDecreto.getPeriodo());
             cs.setString(2, objBnDecreto.getTipo());
@@ -231,7 +231,7 @@ public class DecretosDAOImpl implements DecretosDAO {
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("OPREFA_DOCUMENTOS_DECRETOS");
+            objBnMsgerr.setTabla("OPREFA_MESA_PARTES_DECRETOS");
             objBnMsgerr.setTipo(objBnDecreto.getMode().toUpperCase());
             objBnMsgerr.setDescripcion(e.getMessage());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
@@ -241,14 +241,14 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public int iduDecretarTipoDecreto(BeanDocumentos objBnDecreto, String usuario) {
+    public int iduDecretarTipoDecreto(BeanMesaPartes objBnDecreto, String usuario) {
         sql = "{CALL SP_IDU_DECRETO_TIPO_DECRETO(?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
             cs.setString(1, objBnDecreto.getPeriodo());
             cs.setString(2, objBnDecreto.getTipo());
             cs.setString(3, objBnDecreto.getNumero());
             cs.setInt(4, objBnDecreto.getDecreto());
-            cs.setString(5, objBnDecreto.getTipoDocumento());
+            cs.setString(5, objBnDecreto.getDocumento());
             cs.setString(6, usuario);
             cs.setString(7, objBnDecreto.getMode().toUpperCase());
             s = cs.executeUpdate();
@@ -258,7 +258,7 @@ public class DecretosDAOImpl implements DecretosDAO {
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("OPREFA_DOCUMENTOS_DECRETOS");
+            objBnMsgerr.setTabla("OPREFA_MESA_PARTES_DECRETOS");
             objBnMsgerr.setTipo(objBnDecreto.getMode().toUpperCase());
             objBnMsgerr.setDescripcion(e.getMessage());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
@@ -270,8 +270,8 @@ public class DecretosDAOImpl implements DecretosDAO {
     @Override
     public String getDocumentosPendientes(String usuario) {
         String result = "0";
-        sql = "SELECT COUNT(*) AS DOCUMENTO "
-                + "FROM OPREFA_DOCUMENTOS_DECRETOS WHERE "
+        sql = "SELECT COUNT(*) AS MESA_PARTE "
+                + "FROM OPREFA_MESA_PARTES_DECRETOS WHERE "
                 + "VUSUARIO_RESPONSABLE=? AND "
                 + "CESTADO_CODIGO='AC'";
         try {
@@ -279,7 +279,7 @@ public class DecretosDAOImpl implements DecretosDAO {
             objPreparedStatement.setString(1, usuario);
             objResultSet = objPreparedStatement.executeQuery();
             if (objResultSet.next()) {
-                result = objResultSet.getString("DOCUMENTO");
+                result = objResultSet.getString("MESA_PARTE");
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getDocumentosPendientes(objBnDocumento) : " + e.getMessage());
@@ -297,14 +297,14 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public BeanDocumentos getDecreto(BeanDocumentos objBeanDecreto, String usuario) {
+    public BeanMesaPartes getDecreto(BeanMesaPartes objBeanDecreto, String usuario) {
         sql = "SELECT VUSUARIO_DECRETA, NPRIORIDAD_CODIGO, CAREA_LABORAL_CODIGO, "
-                + "VUSUARIO_RESPONSABLE, VDOCUMENTO_DECRETO_DESCRIPCION "
-                + "FROM OPREFA_DOCUMENTOS_DECRETOS WHERE "
+                + "VUSUARIO_RESPONSABLE, VMESA_PARTE_DECRETO_DESCRIPCION "
+                + "FROM OPREFA_MESA_PARTES_DECRETOS WHERE "
                 + "CPERIODO_CODIGO=? AND "
-                + "CDOCUMENTO_TIPO=? AND "
-                + "NDOCUMENTO_CODIGO=? AND "
-                + "NDOCUMENTO_DECRETO_CODIGO=? ";
+                + "CMESA_PARTE_TIPO=? AND "
+                + "NMESA_PARTE_CODIGO=? AND "
+                + "NMESA_PARTE_DECRETO_CODIGO=? ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanDecreto.getPeriodo());
@@ -317,7 +317,7 @@ public class DecretosDAOImpl implements DecretosDAO {
                 objBeanDecreto.setPrioridad(objResultSet.getString("NPRIORIDAD_CODIGO"));
                 objBeanDecreto.setArea(objResultSet.getString("CAREA_LABORAL_CODIGO"));
                 objBeanDecreto.setUsuarioResponsable(objResultSet.getString("VUSUARIO_RESPONSABLE"));
-                objBeanDecreto.setAsunto(objResultSet.getString("VDOCUMENTO_DECRETO_DESCRIPCION"));
+                objBeanDecreto.setAsunto(objResultSet.getString("VMESA_PARTE_DECRETO_DESCRIPCION"));
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getDecreto(objBeanDecreto) : " + e.getMessage());
@@ -335,14 +335,14 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public ArrayList getListaDecretoTipoDecretos(BeanDocumentos objBeanDecreto, String usuario) {
+    public ArrayList getListaDecretoTipoDecretos(BeanMesaPartes objBeanDecreto, String usuario) {
         ArrayList<String> Arreglo = new ArrayList<>();
         sql = "SELECT NTIPO_DECRETO_CODIGO "
-                + "FROM OPREFA_DOCUMENTOS_DECRETOS_TIP WHERE "
+                + "FROM OPREFA_MESA_PARTES_DECRETOS_TI WHERE "
                 + "CPERIODO_CODIGO=? AND "
-                + "CDOCUMENTO_TIPO=? AND "
-                + "NDOCUMENTO_CODIGO=? AND "
-                + "NDOCUMENTO_DECRETO_CODIGO=? ";
+                + "CMESA_PARTE_TIPO=? AND "
+                + "NMESA_PARTE_CODIGO=? AND "
+                + "NMESA_PARTE_DECRETO_CODIGO=? ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanDecreto.getPeriodo());
@@ -369,21 +369,21 @@ public class DecretosDAOImpl implements DecretosDAO {
     }
 
     @Override
-    public ArrayList getListaDetalleDocumentoDecretado(BeanDocumentos objBeanDecreto, String usuario) {
+    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaPartes objBeanDecreto, String usuario) {
         ArrayList<String> Arreglo = new ArrayList<>();
         ArrayList<String> Filas = new ArrayList<>();
-        sql = "SELECT NDOCUMENTO_DECRETO_CODIGO AS CODIGO, "
+        sql = "SELECT NMESA_PARTE_DECRETO_CODIGO AS CODIGO, "
                 + "PK_UTIL.FUN_USUARIO(VUSUARIO_DECRETA) AS DECRETADOR,"
                 + "PK_UTIL.FUN_USUARIO(VUSUARIO_RESPONSABLE) AS USUARIO_RESPONSABLE,"
                 + "PK_UTIL.FUN_PRIORIDAD(NPRIORIDAD_CODIGO) AS PRIORIDAD,"
-                + "VDOCUMENTO_DECRETO_DESCRIPCION AS COMENTARIO, "
-                + "TO_CHAR(DDOCUMENTO_DECRETO_FECHA,'DD/MM/YYYY') AS FECHA_DECRETO,"
-                + "TO_CHAR(DDOCUMENTO_DECRETO_RECEPCION,'DD/MM/YYYY') AS FECHA_RECEPCION,"
+                + "VMESA_PARTE_DECRETO_DESCRIPCIO AS COMENTARIO, "
+                + "TO_CHAR(DMESA_PARTE_DECRETO_FECHA,'DD/MM/YYYY') AS FECHA_DECRETO,"
+                + "TO_CHAR(DMESA_PARTE_DECRETO_RECEPCION,'DD/MM/YYYY') AS FECHA_RECEPCION,"
                 + "PK_UTIL.FUN_DESCRIPCION_ESTADO(CESTADO_CODIGO) AS ESTADO "
-                + "FROM OPREFA_DOCUMENTOS_DECRETOS WHERE "
+                + "FROM OPREFA_MESA_PARTES_DECRETOS WHERE "
                 + "CPERIODO_CODIGO=? AND "
-                + "CDOCUMENTO_TIPO=? AND "
-                + "NDOCUMENTO_CODIGO=? AND "
+                + "CMESA_PARTE_TIPO=? AND "
+                + "NMESA_PARTE_CODIGO=? AND "
                 + "CESTADO_CODIGO!='AN' "
                 + "ORDER BY CODIGO ";
         try {

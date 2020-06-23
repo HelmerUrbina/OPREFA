@@ -253,7 +253,7 @@ public interface CombosDAO {
 
     public List getPrioridades();
 
-    public List getTipoDocumentos();
+    public List getDocumentos();
 
     public List getClasificacionDocumento();
     

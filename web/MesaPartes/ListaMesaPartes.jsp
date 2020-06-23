@@ -1,5 +1,5 @@
 <%-- 
-    Document   : ListaDocumentos
+    Document   : ListaMesaPartes
     Created on : 31/03/2020, 01:36:27 PM
     Author     : H-URBINA-M
 --%>
@@ -17,7 +17,7 @@
     var mode = null;
     var msg = null;
     var lista = new Array();
-    <c:forEach var="d" items="${objDocumentos}">
+    <c:forEach var="d" items="${objMesaPartes}">
     var result = {numero: '${d.numero}', numeroDocumento: '${d.numeroDocumento}', asunto: '${d.asunto}',
         institucion: '${d.institucion}', prioridad: '${d.prioridad}', fecha: '${d.fecha}', estado: '${d.estado}', firma: '${d.postFirma}',
         legajo: '${d.legajo}', folio: '${d.folio}', usuarioResponsable: '${d.usuarioResponsable}', referencia: "${d.referencia}",
@@ -60,8 +60,8 @@
                         {name: 'codigoUsuario', type: "string"},
                         {name: 'archivo', type: "string"}
                     ],
-            root: "Documentos",
-            record: "Documentos",
+            root: "MesaPartes",
+            record: "MesaPartes",
             id: 'numero'
         };
         var dataAdapter = new $.jqx.dataAdapter(source);
@@ -118,7 +118,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON EXPORTAR
                 ButtonExportar.click(function (event) {
-                    $("#div_GrillaPrincipal").jqxGrid('exportdata', 'xls', 'Listado de Documentos');
+                    $("#div_GrillaPrincipal").jqxGrid('exportdata', 'xls', 'Listado de Mesa de Partes');
                 });
                 ButtonReporte.click(function (event) {
                     var url = '../Reportes?reporte=MPA0001&periodo=' + periodo + '&tipo=' + tipo + '&codigo=' + FechaBus + '/' + mes + '/' + periodo;
@@ -290,7 +290,7 @@
                             }
                         });
                         $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
-                        $("#cbo_TipoDocumento").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
+                        $("#cbo_Documento").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
                         $("#txt_NumeroDocumento").jqxInput({width: 150, height: 20});
                         $("#cbo_Clasificacion").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
                         $("#div_FechaDocumento").jqxDateTimeInput({culture: 'es-PE', animationType: 'fade', width: 150, height: 20});
@@ -306,10 +306,10 @@
                             msg = "";
                             msg += fn_validaCampo(institucion, "Seleccione la Institución.");
                             msg += fn_validaCombos('#cbo_Prioridad', "Seleccione la Prioridad.");
-                            msg += fn_validaCombos('#cbo_TipoDocumento', "Seleccione el Tipo de Documento.");
+                            msg += fn_validaCombos('#cbo_Documento', "Seleccione el Tipo de Documento.");
                             msg += fn_validaCombos('#cbo_Clasificacion', "Seleccione la Clasificación.");
                             if (msg === "") {
-                                $('#frm_Documentos').jqxValidator('validate');
+                                $('#frm_MesaPartes').jqxValidator('validate');
                             } else {
                                 $.alert({
                                     theme: 'material',
@@ -323,7 +323,7 @@
                                 });
                             }
                         });
-                        $('#frm_Documentos').jqxValidator({
+                        $('#frm_MesaPartes').jqxValidator({
                             rules: [
                                 {input: '#txt_Institucion', message: 'Ingrese el nombre de la institución', action: 'keyup, blur', rule: 'required'},
                                 {input: '#txt_NumeroDocumento', message: 'Ingrese el Numero de Documento!', action: 'keyup, blur', rule: 'required'},
@@ -333,7 +333,7 @@
                                 {input: '#txt_Archivo', message: 'Seleccione un Archivo!', action: 'keyup, blur', rule: 'required'}
                             ]
                         });
-                        $('#frm_Documentos').jqxValidator({
+                        $('#frm_MesaPartes').jqxValidator({
                             onSuccess: function () {
                                 fn_GrabarDatos();
                             }
@@ -395,7 +395,7 @@
                 title: 'ADJUNTAR DOCUMENTO',
                 type: 'blue',
                 content: '' +
-                        '<form method="post"  name="frm_AdjuntarDocumento" id="frm_AdjuntarDocumento" action="../IduDocumentos" enctype="multipart/form-data">' +
+                        '<form method="post"  name="frm_AdjuntarDocumento" id="frm_AdjuntarDocumento" action="../IduMesaPartes" enctype="multipart/form-data">' +
                         '<label>Documento : </label>' +
                         '<input type="file" name="fichero" id="fichero" style="text-transform: uppercase; width= 600px" class="name form-control" multiple/>' +
                         '</form>',
@@ -426,7 +426,7 @@
             var comentarioAnulacion = $("#txt_ComentarioAnulacion").val();
             $.ajax({
                 type: "POST",
-                url: "../IduDocumentos",
+                url: "../IduMesaPartes",
                 data: {mode: mode, periodo: periodo, tipo: tipo, numero: codigo, asunto: comentarioAnulacion},
                 success: function (data) {
                     msg = data;
@@ -472,7 +472,7 @@
                 formData.append("numero", codigo);
                 $.ajax({
                     type: "POST",
-                    url: "../IduDocumentos",
+                    url: "../IduMesaPartes",
                     data: formData,
                     dataType: "html",
                     cache: false,
@@ -530,7 +530,7 @@
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "POST",
-                url: "../Documentos",
+                url: "../MesaPartes",
                 data: {mode: 'G', periodo: periodo, mes: mes, tipo: tipo, codigo: FechaBus},
                 success: function (data) {
                     $contenidoAjax.html(data);
@@ -540,18 +540,18 @@
         //FUNCION PARA CARGAR VENTANA DE NUEVO REGISTRO
         function fn_NuevoRegistro() {
             if (tipo === 'S') {
-                fn_cargarComboAjax("#cbo_Usuario", {mode: 'usuarioDocumentos', periodo: periodo, codigo: $("#cbo_Area").val()});
+                fn_cargarComboAjax("#cbo_Usuario", {mode: 'usuarioMesaPartes', periodo: periodo, codigo: $("#cbo_Area").val()});
             }
             $.ajax({
                 type: "POST",
-                url: "../Documentos",
+                url: "../MesaPartes",
                 data: {mode: mode, periodo: periodo, mes: mes, tipo: tipo},
                 success: function (data) {
                     $('#txt_Numero').val(data);
                 }
             });
             $("#cbo_Prioridad").jqxDropDownList('selectItem', '2');
-            $("#cbo_TipoDocumento").jqxDropDownList('selectItem', '1');
+            $("#cbo_Documento").jqxDropDownList('selectItem', '1');
             $("#txt_Asunto").val('');
             $("#cbo_Clasificacion").jqxDropDownList('selectItem', '1');
             $("#txt_Institucion").val('');
@@ -567,7 +567,7 @@
         function fn_EditarRegistro() {
             $.ajax({
                 type: "GET",
-                url: "../Documentos",
+                url: "../MesaPartes",
                 data: {mode: mode, periodo: periodo, mes: mes, tipo: tipo, codigo: codigo},
                 success: function (data) {
                     var dato = data.split("+++");
@@ -576,7 +576,7 @@
                         institucion = dato[1];
                         $("#txt_Institucion").val(dato[2]);
                         $("#cbo_Prioridad").jqxDropDownList('selectItem', dato[3]);
-                        $("#cbo_TipoDocumento").jqxDropDownList('selectItem', dato[4]);
+                        $("#cbo_Documento").jqxDropDownList('selectItem', dato[4]);
                         $("#txt_NumeroDocumento").val(dato[5]);
                         $("#cbo_Clasificacion").jqxDropDownList('selectItem', dato[6]);
                         $('#div_FechaDocumento').jqxDateTimeInput('setDate', dato[7]);
@@ -596,7 +596,7 @@
             var numero = $("#txt_Numero").val();
             archivo = $("#txt_Archivo").val();
             if (archivo !== '') {
-                var formData = new FormData(document.getElementById("frm_Documentos"));
+                var formData = new FormData(document.getElementById("frm_MesaPartes"));
                 formData.append("mode", mode);
                 formData.append("periodo", periodo);
                 formData.append("tipo", tipo);
@@ -604,7 +604,7 @@
                 formData.append("mes", mes);
                 formData.append("institucion", institucion);
                 formData.append("prioridad", $("#cbo_Prioridad").val());
-                formData.append("tipoDocumento", $("#cbo_TipoDocumento").val());
+                formData.append("documento", $("#cbo_Documento").val());
                 formData.append("numeroDocumento", $("#txt_NumeroDocumento").val());
                 formData.append("clasificacion", $("#cbo_Clasificacion").val());
                 formData.append("fechaDocumento", $("#div_FechaDocumento").val());
@@ -615,7 +615,7 @@
                 formData.append("archivo", $("#txt_Archivo").val());
                 $.ajax({
                     type: "POST",
-                    url: "../IduDocumentos",
+                    url: "../IduMesaPartes",
                     data: formData,
                     dataType: "html",
                     cache: false,
@@ -670,10 +670,10 @@
 <div id="div_GrillaPrincipal"></div>
 <div id="div_VentanaPrincipal" style="display: none">
     <div>
-        <span style="float: left">REGISTRO BENEFICIARIOS</span>
+        <span style="float: left">REGISTRO MESA DE PARTES</span>
     </div>
     <div style="overflow: hidden">
-        <form id="frm_Documentos" name="frm_Documentos" enctype="multipart/form-data" action="javascript: fn_GrabarDatos();" method="post">
+        <form id="frm_MesaPartes" name="frm_MesaPartes" enctype="multipart/form-data" action="javascript: fn_GrabarDatos();" method="post">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">Correlativo : </td>
@@ -681,7 +681,7 @@
                 </tr>
                 <tr>
                     <td class="inputlabel">Instituci&oacute;n : </td>
-                    <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;"/></td>
+                    <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Prioridad : </td>
@@ -695,11 +695,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="inputlabel">Tipo Documento : </td>
+                    <td class="inputlabel">Documento : </td>
                     <td>
-                        <select id="cbo_TipoDocumento" name="cbo_TipoDocumento">
+                        <select id="cbo_Documento" name="cbo_Documento">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objTipoDocumentos}">
+                            <c:forEach var="d" items="${objDocumentos}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach>
                         </select>

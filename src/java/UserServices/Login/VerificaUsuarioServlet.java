@@ -55,7 +55,6 @@ public class VerificaUsuarioServlet extends HttpServlet {
         context = config.getServletContext();
         session = request.getSession();
         objConnection = (Connection) context.getAttribute("objConnection");
-        response.setContentType("text/html;charset=ISO-8859-1");
         String accion = request.getParameter("accion");
         String result = null;
         String target = null;
@@ -107,7 +106,6 @@ public class VerificaUsuarioServlet extends HttpServlet {
                 break;
         }
         if (result != null) {
-            response.setContentType("text/html;charset=ISO-8859-1");
             try (PrintWriter out = response.getWriter()) {
                 out.print(result);
             }

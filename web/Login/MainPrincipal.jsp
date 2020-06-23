@@ -3,12 +3,9 @@
     Created on : 16/01/2017, 08:35:38 AM
     Author     : H-URBINA-M
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8" session="true" %>
-<!DOCTYPE html>
 <%@include file="../WEB-INF/jspf/aaadmin.jspf" %>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta http-equiv="Expires" content="0"/>
         <meta http-equiv="Last-Modified" content="0"/>
         <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
@@ -86,8 +83,8 @@
                         $("#txt_NombresPassword").jqxInput({theme: theme, placeHolder: "NOMBRES", height: 20, width: 200, disabled: true});
                         $("#txt_ApellidosPassword").jqxInput({theme: theme, placeHolder: "APELLIDOS", height: 20, width: 200, disabled: true});
                         $("#txt_CargoPassword").jqxInput({theme: theme, placeHolder: "CARGO", height: 20, width: 200, disabled: true});
-                        $("#txt_PasswordRegistro").jqxPasswordInput({theme: theme, placeHolder: "CONTRASEÃ‘A", width: 200, height: 20, maxLength: 50, showStrength: true, showStrengthPosition: "right"});
-                        $("#txt_CompruebaPassword").jqxPasswordInput({theme: theme, placeHolder: "COMPROBAR CONTRASEÃ‘A", width: 200, height: 20, maxLength: 50, showStrength: true, showStrengthPosition: "right"});
+                        $("#txt_PasswordRegistro").jqxPasswordInput({theme: theme, placeHolder: "CONTRASEÑA", width: 200, height: 20, maxLength: 50, showStrength: true, showStrengthPosition: "right"});
+                        $("#txt_CompruebaPassword").jqxPasswordInput({theme: theme, placeHolder: "COMPROBAR CONTRASEÑA", width: 200, height: 20, maxLength: 50, showStrength: true, showStrengthPosition: "right"});
                         $('#btn_CancelarPassword').jqxButton({width: '65px', height: 22});
                         $('#btn_GuardarPassword').jqxButton({width: '65px', height: 22});
                         $('#btn_GuardarPassword').on('click', function (event) {
@@ -99,9 +96,9 @@
                                 {input: '#txt_UsuarioPassword', message: 'Ingrese Solo Numeros (CIP o DNI)!', action: 'keyup, blur', rule: 'number'},
                                 {input: '#txt_NombresPassword', message: 'Ingrese sus Nombres!', action: 'keyup, blur', rule: 'required'},
                                 {input: '#txt_ApellidosPassword', message: 'Ingrese sus Apellidos!', action: 'keyup, blur', rule: 'required'},
-                                {input: '#txt_PasswordRegistro', message: 'Ingrese una ContraseÃ±a!', action: 'keyup, blur', rule: 'required'},
-                                {input: '#txt_CompruebaPassword', message: 'Confirme ContraseÃ±a!', action: 'keyup, blur', rule: 'required'},
-                                {input: '#txt_CompruebaPassword', message: 'ContraseÃ±a no coincide!', action: 'keyup, focus', rule: function (input, commit) {
+                                {input: '#txt_PasswordRegistro', message: 'Ingrese una Contraseña!', action: 'keyup, blur', rule: 'required'},
+                                {input: '#txt_CompruebaPassword', message: 'Confirme Contraseña!', action: 'keyup, blur', rule: 'required'},
+                                {input: '#txt_CompruebaPassword', message: 'Contraseña no coincide!', action: 'keyup, focus', rule: function (input, commit) {
                                         if (input.val() === $('#txt_PasswordRegistro').val()) {
                                             return true;
                                         }
@@ -336,7 +333,7 @@
         COMUNICADO
     </div>
     <div>
-        <div style="font-size: 20px;">LAS UU/OO QUE NO HAN CUMPLIDO CON EL REGISTRO DE INFORMACIÃ“N EN EL MÃ“DULO PAC-PROCESOS, <strong>NO PODRÃN REALIZAR LA EJECUCIÃ“N PRESUPUESTARIA.</strong></div> 
+        <div style="font-size: 20px;">LAS UU/OO QUE NO HAN CUMPLIDO CON EL REGISTRO DE INFORMACIÓN EN EL MÓDULO PAC-PROCESOS, <strong>NO PODRÁN REALIZAR LA EJECUCIÓN PRESUPUESTARIA.</strong></div> 
     </div>
 </div>
 <script type="text/javascript">
