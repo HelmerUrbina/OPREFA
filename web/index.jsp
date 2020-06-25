@@ -56,6 +56,10 @@
                 $("#btn_Ingresar").on('click', function () {
                     $('#frm_Login').jqxValidator('validate');
                 });
+                $("#btn_MesaPartes").jqxButton({theme: theme, template: "info", width: '150'});
+                $("#btn_MesaPartes").on('click', function () {
+                    window.location = "MesaPartes.jsp";
+                });
                 $('#frm_Login').jqxValidator({
                     rules: [
                         {input: '#txt_Usuario', message: 'Ingrese el Usuario!', action: 'keyup, blur', rule: 'required'},
@@ -172,7 +176,10 @@
                                 </tr>
                             </table>
                             <div class="Summit">
-                                <div style="text-align: center;"><input name="btn_Ingresar" id="btn_Ingresar" type="button" value="Ingresar"/></div>
+                                <div >
+                                    <div style="float: left"><input name="btn_MesaPartes" id="btn_MesaPartes" type="button" value="Mesa Partes" /></div>
+                                    <div style="float: right"><input name="btn_Ingresar" id="btn_Ingresar" type="button" value="Ingresar" /></div>
+                                </div>
                             </div>
                         </div>
                         <div class="footer">

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MPA0004" pageWidth="200" pageHeight="110" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
+	<property name="ireport.zoom" value="3.138428376721005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="73"/>
+	<style name="style1" hAlign="Center" vAlign="Middle"/>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["22"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Desarrollo\\OPREFA\\web\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT NMESA_PARTE_CODIGO||'-'||CPERIODO_CODIGO AS NUMERO, 
+INST.VINSTITUCION_DESCRIPCION AS INSTITUCION,
+TO_CHAR(DOCU.DMESA_PARTE_RECEPCION,'DD/MM/YYYY HH24:MM:SS') AS RECEPCION,
+DOCU.VMESA_PARTE_DIGITAL AS DIGITAL
+FROM OPREFA_MESA_PARTES DOCU INNER JOIN OPREFA_INSTITUCIONES INST ON( 
+DOCU.NINSTITUCION_CODIGO=INST.NINSTITUCION_CODIGO)
+WHERE
+CPERIODO_CODIGO=$P{PERIODO} AND
+CMESA_PARTE_TIPO=$P{TIPO} AND
+NMESA_PARTE_CODIGO=$P{CODIGO}]]>
+	</queryString>
+	<field name="NUMERO" class="java.lang.String"/>
+	<field name="INSTITUCION" class="java.lang.String"/>
+	<field name="RECEPCION" class="java.lang.String"/>
+	<field name="DIGITAL" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="60" width="200" height="10" isPrintWhenDetailOverflows="true" uuid="1a0250e1-7e71-45cc-a9b5-c6d47df440c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INSTITUCION}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="1" y="1" width="83" height="20" uuid="ad1e8d74-aef1-449a-879c-1f863a73ebab"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"\\Imagenes\\logo.png"]]></imageExpression>
+			</image>
+			<componentElement>
+				<reportElement style="style1" x="0" y="25" width="200" height="25" uuid="c484352a-b8bd-453f-83cd-2e000240c4aa"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Codabar" drawText="false" checksumRequired="true">
+					<jr:codeExpression><![CDATA[$F{NUMERO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement positionType="Float" x="0" y="70" width="200" height="10" uuid="0d2ef1ed-eed0-4a6b-ab06-e8e470ab0e4f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECEPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="50" width="200" height="10" uuid="3574d051-109a-47f4-bdfa-11be4ddf5fc5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="false" pdfFontName="Courier"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CODIGO}+"-"+$P{PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="80" width="30" height="10" uuid="efeba961-b83f-4d12-8a5d-216f3e28a454"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ADJUNTO : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="30" y="80" width="170" height="10" uuid="d055d9a3-58f6-4ca9-a80d-251c7e0cfceb"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIGITAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="10" uuid="cb5c0137-f0df-4423-9261-e90b9e5e6637"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="5" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[MESA DE PARTES - OFICINA PREVISIONAL DE LAS FUERZAS ARMADAS]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -32,6 +32,7 @@ public class BeanMesaPartes implements Serializable {
     private String UsuarioResponsable;
     private String Archivo;
     private String Referencia;
+    private String Correo;
     private Date Fecha;
     private Date FechaRecepcion;
     private Integer Cantidad;
@@ -181,6 +182,14 @@ public class BeanMesaPartes implements Serializable {
 
     public void setReferencia(String Referencia) {
         this.Referencia = Referencia;
+    }
+
+    public String getCorreo() {
+        return Correo;
+    }
+
+    public void setCorreo(String Correo) {
+        this.Correo = Correo;
     }
 
     public Date getFecha() {

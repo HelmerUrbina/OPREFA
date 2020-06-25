@@ -22,7 +22,7 @@ public interface MesaPartesDAO {
 
     public String getNumeroMesaParte(BeanMesaPartes objBnMesaParte, String usuario);
 
-    public int iduMesaParte(BeanMesaPartes objBeanMesaParte, String usuario);
+    public String iduMesaParte(BeanMesaPartes objBeanMesaParte, String usuario);
 
     public List getListaRemisionMesaParte(BeanMesaPartes objBeanMesaParte, String usuario);
 

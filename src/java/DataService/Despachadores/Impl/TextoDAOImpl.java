@@ -41,7 +41,7 @@ public class TextoDAOImpl implements TextoDAO {
          */
         sql = "SELECT CCATALOGO_COD AS CODIGO, REPLACE(REGEXP_REPLACE(UPPER(VCATALOGO_NOMBRE),'''',''),'\n"
                 + "', ' ') AS DESCRIPCION "
-                + "FROM SIPE_VLOG_CATALOGO_OPRE WHERE "
+                + "FROM OPREFA_VLOG_CATALOGO_OPRE WHERE "
                 + "UPPER(VCATALOGO_NOMBRE) LIKE '" + busqueda.toUpperCase() + "%' "
                 + "ORDER BY 2";
         try {
@@ -234,10 +234,9 @@ public class TextoDAOImpl implements TextoDAO {
     @Override
     public List getInstitucion(String busqueda) {
         lista = new LinkedList<>();
-        sql = "SELECT VINSTITUCION_ABREVIATURA AS DESCRIPCION, CINSTITUCION_CODIGO AS CODIGO "
-                + "FROM SIPE_INSTITUCION WHERE "
-                + "CORGANISMO_CODIGO = '01' AND "
-                + "UPPER(VINSTITUCION_ABREVIATURA) LIKE '%" + busqueda.toUpperCase() + "%' "
+        sql = "SELECT NINSTITUCION_CODIGO AS CODIGO, VINSTITUCION_ABREVIATURA AS DESCRIPCION "
+                + "FROM OPREFA_INSTITUCIONES WHERE "
+                + "CESTADO_CODIGO!='AN'  "
                 + "ORDER BY DESCRIPCION ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
