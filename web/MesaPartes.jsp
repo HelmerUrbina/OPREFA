@@ -47,7 +47,7 @@
                 var customButtonsDemo = (function () {
                     function _createElements() {
                         //INICIA LOS VALORES DE LA VENTANA
-                        $('#div_VentanaPrincipal').jqxExpander({showArrow: false, toggleMode: 'none', width: '600px', height: '400px'});
+                        $('#div_VentanaPrincipal').jqxExpander({showArrow: false, toggleMode: 'none', width: '600px', height: '365px'});
                         $("#txt_Institucion").jqxInput({height: 20, width: 450, minLength: 1, items: 15});
                         $('#txt_Institucion').on('select', function (event) {
                             if (event.args) {
@@ -156,7 +156,6 @@
                             contentType: false,
                             processData: false,
                             success: function (data) {
-                                alert(data);
                                 $contenidoAjax.html("");
                                 msg = data;
                                 if (msg === "GUARDO") {

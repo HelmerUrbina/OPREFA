@@ -68,7 +68,7 @@ public class VerificaUsuarioServlet extends HttpServlet {
                 String texto = request.getParameter("verificacion");
                 Captcha captcha = (Captcha) session.getAttribute(Captcha.NAME);
                 if (!captcha.getAnswer().toUpperCase().equals(texto.toUpperCase())) {
-                    result = "Codigo de Verificación Incorrecto!";
+                    result = "Código de Verificación Incorrecto!";
                     break;
                 }
                 UsuarioDAO daoUsuarios = new UsuarioDAOImpl(objConnection);
