@@ -58,6 +58,7 @@ public class PlanillaSIAFDAOImpl implements PlanillaSIAFDAO {
             objPreparedStatement.setString(1, busqueda);
             objPreparedStatement.setString(2, "%" + busqueda.replaceAll(" ", "%").toUpperCase() + "%");
             objResultSet = objPreparedStatement.executeQuery();
+            
             while (objResultSet.next()) {
                 objBnPlanilla = new BeanPlanilla();
                 objBnPlanilla.setPeriodo(objResultSet.getString("PERIODO"));
