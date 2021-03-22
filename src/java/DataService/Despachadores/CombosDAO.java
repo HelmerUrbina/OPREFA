@@ -246,7 +246,7 @@ public interface CombosDAO {
 
     //MESA DE PARTES
     public List getInstituciones();
-    
+
     public List getUsuarioJefatura();
 
     public List getUsuarioAreaLaboral(String areaLaboral);

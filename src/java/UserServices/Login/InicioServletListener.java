@@ -28,6 +28,7 @@ public class InicioServletListener implements ServletContextListener {
         //Creacion de Conexion a Base de Datos
         connection = new ConnectionSource();
         objConnection = connection.getConnection();
+        System.out.println(connection.getConnection());
         if (objConnection != null) {
             ctx.setAttribute("objConnection", objConnection);
             System.out.println("SE HA CONECTADO SATISFACTORIAMENTE............ OPREFA");

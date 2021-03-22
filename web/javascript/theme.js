@@ -1,6 +1,6 @@
 var theme = "ui-start"; // ui-start  -- ui-redmond -- ui-lightness -- arctic -- darkblue -- fresh
 function getTheme() {
-    var url = "/OPREFA/css/styles/jqx." + theme + ".css";
+    var url = "css/styles/jqx." + theme + ".css";
     var hasStyle = false;
     if (document.styleSheets) {
         $.each(document.styleSheets, function (index, value) {

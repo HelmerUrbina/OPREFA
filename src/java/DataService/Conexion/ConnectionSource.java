@@ -14,6 +14,7 @@ public class ConnectionSource {
         try {
             Context c = new InitialContext();
             DataSource ds = (DataSource) c.lookup("java:comp/env/OPREFA");
+            
             objConnection = ds.getConnection();
         } catch (NamingException | SQLException e) {
             System.out.println("Problemas!: Fallo la creacion del Pool de Conexiones... OPREFA \n" + e.getMessage());
